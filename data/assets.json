@@ -1,13 +1,1 @@
-{"default": [
-  "uniswap",
-  "yearn-finance",
-  "aave",
-  "maker",
-  "sushi",
-  "badger-dao",
-  "balancer",
-  "loopring",
-  "kyber-network-crystal",
-  "havven"
-]
-}
+{"DeFiPulse": ["uniswap", "yearn-finance", "aave", "maker", "sushi", "badger-dao", "balancer", "loopring", "kyber-network-crystal", "havven"], "default": ["uniswap", "chainlink", "aave", "lido-dao", "maker", "the-graph", "compound-ether", "curve-dao-token", "havven", "rocket-pool", "frax-share", "1inch"]}
