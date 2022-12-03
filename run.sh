@@ -2,8 +2,8 @@
 # exit when any command fails
 set -e
 
-echo -e "Enter the list of assets or 'default'
-*Remember that the assets must be consistent with Coingecko ids"
+echo -e "Enter either 'default' or 'DeFiPulse'
+*In the future more options will be supported"
 # shellcheck disable=SC2162
 read assets
 export assets

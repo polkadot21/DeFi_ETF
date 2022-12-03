@@ -1,24 +1,30 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Tuple, Union
+from typing import Union
 import pandas as pd
 from pyhere import here
 from typing import Final
 import json
 import os
+from pycoingecko import CoinGeckoAPI
 
 assets_choice = os.getenv("assets", "default")
 
 print("============")
+print("Set assets to:")
 print(assets_choice)
 print("============")
 
+ASSETS_PATH: Final = here("data", "assets.json")
+
 if assets_choice == "default":
-    ASSETS_PATH: Final = here("data", "assets.json")
     with open(ASSETS_PATH) as assets_json:
         ASSETS: Final = json.load(assets_json)["default"]
+elif assets_choice.lower() == "defipulse":
+    with open(ASSETS_PATH) as assets_json:
+        ASSETS: Final = json.load(assets_json)["DeFiPulse"]
 else:
-    ASSETS: Final = json.loads(assets_choice)
+    raise NotImplementedError("Other assets will be implemented in the future!")
 
 
 @dataclass
@@ -76,3 +82,22 @@ class Historical:
                 temp.extract_value()
                 df = pd.concat([df, temp.df], axis=1)
         return df
+
+
+# TODO: implement error handling for ids
+class Collectable(ABC, CoinGeckoAPI):
+    def __init__(self):
+        super().__init__()
+        self._assets = []
+        self._category = None
+        self._currency = "usd"
+        self._order = "market_cap_desc"
+
+    @property
+    def assets(self):
+        return self._assets
+
+    def collect(self):
+        coins = self.get_coins_markets(vs_currency=self._currency, category=self._category, order=self._order)
+        for coin in coins:
+            self._assets.append(coin["id"])

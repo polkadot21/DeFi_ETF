@@ -19,7 +19,7 @@ class DownloaderAndSaver(CoinGeckoAPI):
 
         with open("data/" + asset_id + ".json", 'w') as fp:
             json.dump(prices_and_mcap, fp)
-            print(f"Saved: {asset_id} data for {self._n_days}")
+            print(f"Saved: {asset_id} for {self._n_days}")
 
 
 if __name__ == "__main__":
