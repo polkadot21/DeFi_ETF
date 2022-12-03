@@ -18,7 +18,7 @@ class EthereumEcoSystem(Collectable):
 
     @property
     def key_words(self):
-        return ("staked", "liquid")
+        return ("staked", "liquid", "ether", "share")
 
 
 class Stable(Collectable):
