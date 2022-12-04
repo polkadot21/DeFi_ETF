@@ -9,7 +9,7 @@ import os
 from pycoingecko import CoinGeckoAPI
 import numpy as np
 
-assets_choice = os.getenv("assets", "DeFiPulse")
+assets_choice = os.getenv("assets", "defipulse")
 
 print("============")
 print("Set assets to:")
