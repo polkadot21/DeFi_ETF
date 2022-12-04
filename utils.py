@@ -7,8 +7,9 @@ from typing import Final
 import json
 import os
 from pycoingecko import CoinGeckoAPI
+import numpy as np
 
-assets_choice = os.getenv("assets", "default")
+assets_choice = os.getenv("assets", "DeFiPulse")
 
 print("============")
 print("Set assets to:")
@@ -35,6 +36,12 @@ class Assets:
 @dataclass
 class Weights:
     asset_to_weight: dict
+
+
+@dataclass
+class Threshold:
+    upper: float
+    lower: float
 
 
 class ETF(ABC):
@@ -101,3 +108,57 @@ class Collectable(ABC, CoinGeckoAPI):
         coins = self.get_coins_markets(vs_currency=self._currency, category=self._category, order=self._order)
         for coin in coins:
             self._assets.append(coin["id"])
+
+
+def SMA(values, n):
+    """
+    Return simple moving average of `values`, at
+    each step taking into account `n` previous values.
+    """
+    return pd.Series(values).rolling(n).mean()
+
+
+def get_X(data):
+    """Return model design matrix X"""
+    return data.filter(like='X').values
+
+
+def get_y(data):
+    """Return dependent variable y"""
+    y = data.Close.pct_change(48).shift(-48)  # Returns after roughly two days
+    y[y.between(-.004, .004)] = 0  # Devalue returns smaller than 0.4%
+    y[y > 0] = 1
+    y[y < 0] = -1
+    return y
+
+
+def get_clean_Xy(df):
+    """Return (X, y) cleaned of NaN values"""
+    X = get_X(df)
+    y = get_y(df).values
+    isnan = np.isnan(y)
+    X = X[~isnan]
+    y = y[~isnan]
+    return X, y
+
+
+def extract_sma_features(df: pd.DataFrame):
+    SMA_LENGTH: Final = (10, 20, 50, 100)
+    smas = []
+    close = df.Close.values
+    for length in SMA_LENGTH:
+        smas.append(SMA(df.Close, length))
+        df[f"X_SMA{SMA_LENGTH}"] = close - SMA(df.Close, length) / close
+
+
+def extract_threshold_features(df: pd.DataFrame, threshold: Threshold):
+    # Indicator features
+    close = df.Close.values
+    df['X_MOM'] = df.Close.pct_change(periods=2)
+    df['X_BB_upper'] = (threshold.upper - close) / close
+    df['X_BB_lower'] = (threshold.lower - close) / close
+    df['X_BB_width'] = (threshold.upper - threshold.lower) / close
+
+
+def extract_day_of_week(df: pd.DataFrame):
+    df['X_day'] = df.index.dayofweek
