@@ -10,7 +10,7 @@ class DownloaderAndSaver(CoinGeckoAPI):
     def __init__(self):
         super().__init__()
         self._currency: Final = "usd"
-        self._n_days: Final = 365
+        self._n_days: Final = 366
 
     def download_and_save(self, asset_id: str):
         prices_and_mcap = self.get_coin_market_chart_by_id(id=[asset_id],

@@ -41,7 +41,7 @@ class SmaCross(Strategy):
             self.sell()
 
 
-N_TRAIN = 200
+N_TRAIN = 75
 
 
 class MLTrainOnceStrategy(Strategy):
