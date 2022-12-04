@@ -1,7 +1,8 @@
-FROM python:3.10
+FROM python:3.10-slim
 
-COPY . .
-
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-CMD ["bash", "run.sh"]
+COPY . .
+RUN python3 downloader.py
+CMD ["python3", "backtester.py"]

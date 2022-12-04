@@ -72,16 +72,48 @@ the both strategies were able to outperform "buy and hold" by 586% and 66% respe
 P.S. Due to [a known bug](https://github.com/kernc/backtesting.py/issues/803) in Bokeh the plotting doesn't work in PyCharm.
 Hence, there are .ipynb files to reproduce the plots.
 
+## Discussion
+
+As we have seen above, the value of the index has dropped drastically over the past 365 days. Nevertheless,
+such a simple strategy as SMA crossover yielded almost 500% annually. On the other hand, a k-NN model failed to 
+generalize after having been trained on 75 days. There exist different reasons for that:
+
+1) the model couldn't adjust to a shift in the distribution. Obviously, the sample size was too small while 
+the inference data were too big;
+
+2) k-NN is a practical yet simple algorithm which can't capture complex behavior. More sophisticated
+algorithms are needed (LSTM, Transformer);
+
+3) the feature set was not sufficient to map the dependent variable. Consider adding sentiment and other technical markers.
+
+4) Also, there might be even more dependent variables, say, price, volume, etc. And the decision can be made based on their combination.
+
 ## How to run?
 
-1) Docker;
+1) Docker
 
-2) Venv.
+You can download the image from DockerHub and run it locally:
+
+```bash
+docker pull evsa/defi
+docker run defi
+```
+2) Conda
+
+You can download the project and create a new conda env to run it locally:
+
+```bash
+mkdir defi && cd ./defi
+git clone https://github.com/polkadot21/DeFi_ETF.git
+conda create -yn defi python=3.10
+conda activate defi
+pip3 install -r requirements.txt
+bash run.sh DeFiPulse smacrossover
+```
 
 
 ## ToDo
 
-- extend the readme on docker & venv;
 - implement unit tests for the remaining utils;
 - implement the network and exchange fees when rebalancing;
 - implement the input of arbitrary assets.
