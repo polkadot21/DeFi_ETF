@@ -47,23 +47,30 @@ The rebalancement of the weights was done daily.
 
 ## Trading Strategy
 
-To compare and evaluate different investment strategies, [the Python Backtester](https://kernc.github.io/backtesting.py/) is used. 
-In the default algorithm, two simple strategies were compared:
+To compare and evaluate different investment strategies, [the Python Backtester](https://kernc.github.io/backtesting.py/) is used.
+While "buy and hold" was taken as a benchmark, two investment strategies were compared in this experiment:
 
-a) buy & hold;
+a) [moving-average crossover](https://en.wikipedia.org/wiki/Moving_average_crossover).
 
-![buy_and_hold.png](img/buy_and_hold.png)
+![SMA_crossover.png](img/smacrossover.png)
 
-b) [moving-average crossover](https://en.wikipedia.org/wiki/Moving_average_crossover).
+b) forecasting with the k-NN algorithm
 
-![SMA_crosspver.png](img/SMA_crossover.png)
+![forecasting.png](img/forecasting.png)
 
-Backtesting was done on the previous 365 days. Surprisingly, the MA crossover strategy showed over 600% annual returns 
-with Sharpe ratio equal to 0.68. In the meantime, a vanilla "buy & hold" would achieve -89% over the same period.
+
+In this strategy, we trained a simple k-NN classifier on the first 75 days and tried to forecast the price movement
+in the next 48 hours. 
+
+Backtesting was done on the previous 365 days. Surprisingly, the MA crossover strategy showed almost 500% annual returns 
+with the Sharpe ratio equal to 0.68. In contrast to that, the strategy utilizing the k-NN classifier performed poorly 
+and wasn't profitable (-23% annual return). The reasons for that will be discussed later.
+In the meantime, a vanilla "buy & hold" would achieve -89% over the same period. It means that
+the both strategies were able to outperform "buy and hold" by 586% and 66% respectively.
 
 
 P.S. Due to [a known bug](https://github.com/kernc/backtesting.py/issues/803) in Bokeh the plotting doesn't work in PyCharm.
-Hence, there is a Notebook to reproduce the plots.
+Hence, there are .ipynb files to reproduce the plots.
 
 ## How to run?
 
@@ -76,11 +83,8 @@ Hence, there is a Notebook to reproduce the plots.
 
 - extend the readme on docker & venv;
 - implement unit tests for the remaining utils;
-- extend the list of assets (there are some assets missing);
-- implement another trading strategy;
-- fix the plotting issue;
 - implement the network and exchange fees when rebalancing;
-- fix the bash script for arbitrary assets.
+- implement the input of arbitrary assets.
 
 ## How to contribute?
 
