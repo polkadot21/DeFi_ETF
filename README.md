@@ -9,25 +9,33 @@ This index reveals a simple yet diversified exposure to the field of DeFi.
 A person who gives financial advice is called a financial advisor and takes money for his duties. I share this project for free and thus have nothing to do with any type of financial advice. Remember that this project serves for educations purposes only!
 
 
-## Tokens included
+## Tokens included (Updated!)
 
+The Ethereum blockchain is currently hosting more than [600 DeFi-protocols](https://defillama.com/chains) 
+with over than $24b in TVL which serves for stability and opportunity to gain 
+profits.
+
+The first portfolio considered in this PoC consisted of the top-12 market-cap DeFi applications
+on the Ethereum blockchain. However, the wrapped/liquid and stable coins were excluded.
+The market cap cut was done on December 3, 2022. Indeed, this portfolio is taken
+into consideration when you run the following command:
+
+`bash run.sh default
+`
+
+Another set of assets mimics the renown [DeFi Pulse Index](https://indexcoop.com/defi-pulse-index-dpi#:~:text=The%20DeFi%20Pulse%20Index%20is,of%20each%20token's%20circulating%20supply.)..
 To appear in this index, the token must satisfy the following criteria:
 
 - exist on the Ethereum blockchain;
 - must be in the top-10 according to the market-cap;
 - is NOT a wrapped token or/and NOT a derivative or/and NOT a stablecoin.
 
-The default set of the tokens included in the ETF mimics the infamous [DeFi Pulse Index](https://indexcoop.com/defi-pulse-index-dpi#:~:text=The%20DeFi%20Pulse%20Index%20is,of%20each%20token's%20circulating%20supply.).
+The market cap cut was done on September, 8, 2020.
 
 ![img.png](img/img.png)
 
-However, feel free to build your own set by passing a list of tokens to the CLI tool, e.g.,
-
-`
-'["uniswap", "yearn-finance",...]'
-`
-
-Make sure that the names of the tokens you define remain consistent with the Coingecko token ids.
+In the future, you will be able to pass your custom set of tokens.
+Feel free to open an issue and a PR with the implementation.
 
 ## Token's Composition
 

@@ -2,11 +2,9 @@
 # exit when any command fails
 set -e
 
-echo -e "Enter either 'default' or 'DeFiPulse'
-*In the future more options will be supported"
 # shellcheck disable=SC2162
-read assets
-export assets
+echo "$1"
+export assets=$1
 echo "You've chosen the following assets: $assets"
 
 python3 downloader.py && python3 backtester.py
