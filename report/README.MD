@@ -4,21 +4,27 @@ This is a vanilla DeFi ETF implemented as a cap-weighted index of the top market
 on the Ethereum blockchain. 
 This index reveals a simple yet diversified exposure to the field of DeFi.
 
-## Disclaimer
 
-A person who gives financial advice is called a financial advisor and takes money for his duties. I share this project for free and thus have nothing to do with any type of financial advice. Remember that this project serves for educations purposes only!
-
-## Tokens included
+## Assets
 
 The Ethereum blockchain is currently hosting more than [600 DeFi-protocols](https://defillama.com/chains) 
 with over than $24b in TVL which serves for stability and opportunity to gain 
 profits.
 
-The first portfolio considered in this PoC consisted of the top-12 market-cap DeFi applications
+a) The first portfolio considered in this PoC consisted of the top-12 market-cap DeFi applications
 on the Ethereum blockchain. However, the wrapped/liquid and stable coins were excluded.
 The market cap cut was done on December 3, 2022. 
+The tokens are weighted based on their market capitalization. 
+For sake of simplicity, the total market capitalization of the chosen assets was computed on the daily basis.
+Then, the weight of each asset was acquired as a ratio of the market capitalization of a particular token over the total market capitalization on that day.
+In the end, the "etf price" was calculates as the sum of the price of each token multiplied by the corresponding weight.
+The rebalancement of the weights was done daily.
 
-Another set of assets mimics the renown [DeFi Pulse Index](https://indexcoop.com/defi-pulse-index-dpi#:~:text=The%20DeFi%20Pulse%20Index%20is,of%20each%20token's%20circulating%20supply.)..
+
+**Spoiler**: this set of assets proved non-profitable for any strategy
+described in the further sections. Thus, the next set of assets was considered in this case.
+
+b) Another set of assets mimics the renown [DeFi Pulse Index](https://indexcoop.com/defi-pulse-index-dpi#:~:text=The%20DeFi%20Pulse%20Index%20is,of%20each%20token's%20circulating%20supply.).
 To appear in this index, the token must satisfy the following criteria:
 
 - exist on the Ethereum blockchain;
@@ -26,14 +32,9 @@ To appear in this index, the token must satisfy the following criteria:
 - is NOT a wrapped token or/and NOT a derivative or/and NOT a stablecoin.
 
 The market cap cut was done on September, 8, 2020.
+This set was used to backtest the strategies. All the results in the next sections reveal the metrics on this set!
 
-## Token's Composition & Strategy
-
-The tokens are weighted based on their market capitalization. 
-For sake of simplicity, the total market capitalization of the chosen assets was computed on the daily basis.
-Then, the weight of each asset was acquired as a ratio of the market capitalization of a particular token over the total market capitalization on that day.
-In the end, the "etf price" was calculates as the sum of the price of each token multiplied by the corresponding weight.
-The rebalancement of the weights was done daily.
+## Strategies
 
 To compare and evaluate different investment strategies, [the Python Backtester](https://kernc.github.io/backtesting.py/) is used.
 While "buy and hold" was taken as a benchmark, two investment strategies were compared in this experiment:
